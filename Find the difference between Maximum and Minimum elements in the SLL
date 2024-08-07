@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+void insertAtBeginning(struct Node** head, int new_data) {
+    struct Node* new_node=(struct Node*)malloc(sizeof(struct Node));
+    new_node->data = new_data;
+    new_node->next = *head;
+    *head = new_node;
+}
+int findDifference(struct Node* head) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return 0;
+    }
+    int max = head->data;
+    int min = head->data;
+    struct Node* temp = head;
+    while (temp != NULL) {
+        if (temp->data > max) {
+            max = temp->data;
+        }
+        if (temp->data < min) {
+            min = temp->data;
+        }
+        temp = temp->next;
+    }
+
+    return max - min;
+}
+void printList(struct Node* node) {
+    while (node != NULL) {
+        printf("%d->", node->data);
+        node = node->next;
+    }
+    printf("NULL\n");
+}
+int main() {
+    struct Node* head = NULL;
+    int value;
+   printf("Enter values for the linked list (enter -2 to stop):\n");
+    while (1) {
+        scanf("%d", &value);
+        if (value == -2) {
+            break;
+        }
+        insertAtBeginning(&head, value);
+    }
+    int difference = findDifference(head);
+    printf("Output: Difference = %d\n", difference);
+    return 0;
+}
